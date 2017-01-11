@@ -1,0 +1,2 @@
+# solr-ambari
+# solr-ambari
