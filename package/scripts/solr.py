@@ -7,12 +7,11 @@ class Solr(Script):
         
         #import properties defined in -config.xml file from params class
         import params
-	    import status_params
+        import status_params
         # Install packages listed in metainfo.xml
         #self.install_packages(env)
-	    Execute('find '+params.service_packagedir+' -iname "*.sh" | xargs chmod +x')	
-	
-	    try: grp.getgrnam(params.solr_group)
+        Execute('find '+params.service_packagedir+' -iname "*.sh" | xargs chmod +x')	
+        try: grp.getgrnam(params.solr_group)
     	except KeyError: Group(group_name=params.solr_group) 
     
     	try: pwd.getpwnam(params.solr_user)
@@ -26,7 +25,7 @@ class Solr(Script):
               cd_access='a',
               owner=params.solr_user,
               group=params.solr_group
-                )
+            )
 
 
         File(params.solr_log,
@@ -41,8 +40,8 @@ class Solr(Script):
         
         #params.solr_downloadlocation
 
-        Execute('cd ' + params.solr_dir + '; wget  ' + params.solr_downloadlocation , user=params.solr_user)
-        Execute('cd ' + params.solr_dir + '; tar -xvf solr-5.5.3.tgz', user=params.solr_user)
+        Execute('cd ' + params.solr_dir + '; wget  ' + params.solr_downloadlocation +' -O solr.tgz', user=params.solr_user)
+        Execute('cd ' + params.solr_dir + '; tar -xvf solr.tgz', user=params.solr_user)
         Execute('cd ' + params.solr_dir + '; ln -s solr latest', user=params.solr_user)
         
         
@@ -72,15 +71,48 @@ class Solr(Script):
 
     def start(self, env):
 
-        print 'Start the solr......'
+        #import properties defined in -config.xml file from params class
+        import params
+
+        #import status properties defined in -env.xml file from status_params class
+        import status_params
+        self.configure(env)
+
+        #this allows us to access the params.solr_pidfile property as format('{solr_pidfile}')
+        env.set_params(params)
+            
+        Execute('find '+params.service_packagedir+' -iname "*.sh" | xargs chmod +x')
+
+        cmd = params.service_packagedir + '/scripts/start.sh ' + params.solr_dir + ' ' + params.solr_log + ' ' + status_params.solr_pidfile + ' ' + params.solr_bindir
+        Execute('echo "Running cmd: ' + cmd + '"')    
+        Execute(cmd, user=params.solr_user)
 
     def stop(self, env):
 
-        print 'Stop the solr......'
+        import params
+     
+        #import status properties defined in -env.xml file from status_params class  
+        import status_params
+        
+        #this allows us to access the params.solr_pidfile property as format('{solr_pidfile}')
+        env.set_params(params)
+        #self.configure(env)
+
+        
+        #kill the instances of solr
+        Execute (format('SOLR_INCLUDE={solr_conf}/solr.in.sh {solr_bindir}/solr stop -all >> {solr_log}'), user=params.solr_user, ignore_failures=True)  
+
+        #delete the pid file
+        Execute (format("rm -f {solr_pidfile} >> {solr_log}"), user=params.solr_user, ignore_failures=True)
 
     def status(self, env):
         
-        print 'Stop the solr......'
+        #import status properties defined in -env.xml file from status_params class
+        import status_params
+        env.set_params(status_params)  
+        
+        #use built-in method to check status using pidfile
+        check_process_status(status_params.solr_pidfile)  
 
 if __name__ == "__main__":
     Solr().execute()
