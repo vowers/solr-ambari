@@ -63,7 +63,7 @@ class Solr(Script):
         File(format("{solr_datadir}/solr.xml"), content=xml_content, owner=params.solr_user)    
 
         log4j_content=InlineTemplate(params.solr_log4j_content)    
-        File(format("{solr_log4jdir}/resources/log4j.properties"), content=log4j_content, owner=params.solr_user)    
+        File(format("{server_dir}/resources/log4j.properties"), content=log4j_content, owner=params.solr_user)    
 
         zoo_content=InlineTemplate(params.solr_zoo_content)    
         File(format("{solr_datadir}/zoo.cfg"), content=zoo_content, owner=params.solr_user)    
