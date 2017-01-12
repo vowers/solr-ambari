@@ -40,7 +40,7 @@ class Solr(Script):
         
         #params.solr_downloadlocation
 
-        Execute('cd ' + params.solr_dir + '; wget  ' + params.solr_downloadlocation +' -O solr.tgz', user=params.solr_user)
+        Execute('cd ' + params.solr_dir + '; wget  -c' + params.solr_downloadlocation +' -O solr.tgz -o '+ params.solr_log, user=params.solr_user)
         Execute('cd ' + params.solr_dir + '; tar -xvf solr.tgz', user=params.solr_user)
         Execute('cd ' + params.solr_dir + '; ln -s solr latest', user=params.solr_user)
         
@@ -63,7 +63,7 @@ class Solr(Script):
         File(format("{solr_datadir}/solr.xml"), content=xml_content, owner=params.solr_user)    
 
         log4j_content=InlineTemplate(params.solr_log4j_content)    
-        File(format("/opt/solr/latest/server/resources/log4j.properties"), content=log4j_content, owner=params.solr_user)    
+        File(format("{solr_log4jdir}/resources/log4j.properties"), content=log4j_content, owner=params.solr_user)    
 
         zoo_content=InlineTemplate(params.solr_zoo_content)    
         File(format("{solr_datadir}/zoo.cfg"), content=zoo_content, owner=params.solr_user)    

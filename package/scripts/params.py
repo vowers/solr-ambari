@@ -59,9 +59,10 @@ if not solr_conf.strip():
   solr_conf=solr_bindir
   
 solr_datadir = config['configurations']['solr-config']['solr.datadir']
+
 if not solr_datadir.strip():
   solr_datadir=os.path.join(*[server_dir,'solr'])
-
+solr_log4jdir = solr_datadir[:-5]#修复log4jdir的bug
 solr_data_resources_dir = os.path.join(solr_datadir,'resources')
 
 
