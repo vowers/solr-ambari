@@ -39,7 +39,8 @@ class Solr(Script):
         Execute('echo Solr dir: ' + params.solr_dir)
         
         #params.solr_downloadlocation
-
+        cmd = params.service_packagedir + '/scripts/setup.sh ' + params.solr_dir
+        Execute(cmd, user=params.solr_user)
         Execute('cd ' + params.solr_dir + '; wget  -c' + params.solr_downloadlocation +' -O solr.tgz -o '+ params.solr_log, user=params.solr_user)
         Execute('cd ' + params.solr_dir + '; tar -xvf solr.tgz', user=params.solr_user)
         Execute('cd ' + params.solr_dir + '; ln -s solr latest', user=params.solr_user)
