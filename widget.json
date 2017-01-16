@@ -1,9 +1,9 @@
 {
     "layouts": [
         {
-            "layout_name": "default_sample_dashboard",
+            "layout_name": "default_solr_dashboard",
             "display_name": "Standard TEST Dashboard",
-            "section_name": "SOLR_SERVER",
+            "section_name": "SOLR_SUMMARY",
             "widgetLayoutInfo": [
                 {
                     "widget_name": "test_widget",
@@ -14,7 +14,7 @@
                         {
                             "name": "test1",
                             "metric_path": "metrics/test1",
-                            "service_name": "SAMPLE",
+                            "service_name": "SOLR",
                             "component_name": "SOLR_SERVER"
                         }
                     ],
