@@ -1,48 +1,28 @@
 {
-  "SOLR_LOGFEEDER": {
+  "SOLR_SERVER": {
     "Component": [
       {
         "type": "ganglia",
         "metrics": {
           "default": {
-            "metrics/filter/error/grok": {
-              "metric": "filter.error.grok",
-              "pointInTime": false,
+            "metrics/test1": {
+              "metric": "test1",
+              "pointInTime": true,
               "temporal": true
             },
-            "metrics/filter/error/truncate": {
-              "metric": "filter.error.truncate",
-              "pointInTime": false,
+            "metrics/test2": {
+              "metric": "test2",
+              "pointInTime": true,
               "temporal": true
             },
-            "metrics/input/files/read_lines": {
-              "metric": "input.files.read_lines",
-              "pointInTime": false,
+            "metrics/test3": {
+              "metric": "test3",
+              "pointInTime": true,
               "temporal": true
             },
-            "metrics/input/files/read_bytes": {
-              "metric": "input.files.read_bytes",
-              "pointInTime": false,
-              "temporal": true
-            },
-            "metrics/output/kafka/write_logs": {
-              "metric": "output.kafka.write_logs",
-              "pointInTime": false,
-              "temporal": true
-            },
-            "metrics/output/kafka/write_bytes": {
-              "metric": "output.kafka.write_bytes",
-              "pointInTime": false,
-              "temporal": true
-            },
-            "metrics/output/solr/write_logs": {
-              "metric": "output.solr.write_logs",
-              "pointInTime": false,
-              "temporal": true
-            },
-            "metrics/output/solr/write_bytes": {
-              "metric": "output.solr.write_bytes",
-              "pointInTime": false,
+            "metrics/test4": {
+              "metric": "test4",
+              "pointInTime": true,
               "temporal": true
             }
           }

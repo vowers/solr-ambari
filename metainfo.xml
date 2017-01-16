@@ -18,6 +18,7 @@
                     <displayName>Solr</displayName>
                     <category>MASTER</category>
                     <cardinality>1+</cardinality>
+                    <timelineAppid>solr</timelineAppid>
                     <versionAdvertised>true</versionAdvertised>
                     <commandScript>
                         <script>scripts/solr.py</script>
